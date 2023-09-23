@@ -6,7 +6,6 @@ const {log} = require("debug");
 const {route} = require("express/lib/router");
 main().catch(err => console.log(err));
 
-/* GET home page. */
 //Ket noi mongoose
 async function main(){
     await mongo.connect('mongodb+srv://phucnxph29170:Kondien123@cluster0.kutdlfc.mongodb.net/film')
@@ -18,6 +17,7 @@ const account = new mongo.Schema({
   matKhau: String,
   nhapLai:String
 });
+const Account = mongo.model('TaiKhoan', account, 'profile')
 
 //Them account
 /*router.post('/themTaiKhoan',async function (req, res) {
@@ -35,27 +35,24 @@ const account = new mongo.Schema({
         })
       res.render('index', { data: data, messsage:'Them thanh cong!!!'})
     });*/
-router.post('/themTaiKhoan', async function (req, res) {
-    const ten = req.body.ten
-    const gmail = req.body.gmail
-    const matKhau = req.body.matKhau
-    const nhapLai = req.body.nhapLai
-    console.log( req.body)
-    const ACCOUNT = mongo.model('TaiKhoan', account, 'profile')
-    const data = await ACCOUNT.find();
-    await ACCOUNT.create({
-        ten:ten,
-        gmail:gmail,
-        matKhau:matKhau,
-        nhapLai:nhapLai
-    })
-    res.render('index', {data: data, message:'Them thanh cong'})
-})
+// router.post('/themTaiKhoan', async function (req, res) {
+//     const ten = req.body.ten
+//     const gmail = req.body.gmail
+//     const matKhau = req.body.matKhau
+//     const nhapLai = req.body.nhapLai
+//     console.log( req.body)
+//     const data = await Account.find();
+//     await Account.create({
+//         ten:ten,
+//         gmail:gmail,
+//         matKhau:matKhau,
+//         nhapLai:nhapLai
+//     })
+//     res.render('index', {data: data, message:'Them thanh cong'})
+// })
 
 router.get('/', async function (req, res, next) {
-  const ACCOUNT = mongo.model('TaiKhoan', account, 'profile');
-  const data = await ACCOUNT.find({});
-  res.render('index', {title: 'Express', data:data});
+  res.send("Dashboard");
 });
 
 module.exports = router;
